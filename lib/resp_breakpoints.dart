@@ -34,11 +34,30 @@ class RespDefaultBreakPoints {
     const RespBreakpoint(name: 'xxl', value: 1200),
   ];
 
-  /// Get the sorted list of breakpoints (Ascending order of the
+  /// Get the sorted list of default breakpoints (Ascending order of the
   /// breakpoint value)
   List<RespBreakpoint> get defaultBreakpoints {
     return RespDefaultBreakPoints._defaultBreakPoints
       ..sort(
+        (a, b) => a.value.compareTo(b.value),
+      );
+  }
+
+  /// Get the sorted list of custom breakpoints along with the default
+  /// breakpoints (Ascending order of the breakpoint value)
+  List<RespBreakpoint> customBreakpoints(
+      List<RespBreakpoint> customBreakpoints) {
+    return [...RespDefaultBreakPoints._defaultBreakPoints, ...customBreakpoints]
+      ..sort(
+        (a, b) => a.value.compareTo(b.value),
+      );
+  }
+
+  /// Get the sorted list of custom breakpoints without the default
+  /// breakpoints (Ascending order of the breakpoint value)
+  List<RespBreakpoint> customBreakpointsWithoutDefaults(
+      List<RespBreakpoint> customBreakpoints) {
+    return [...customBreakpoints]..sort(
         (a, b) => a.value.compareTo(b.value),
       );
   }
