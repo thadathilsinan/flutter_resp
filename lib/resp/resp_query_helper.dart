@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// A helper class used to get the current size of the device
-class RespQueryHelper {
+final class RespQueryHelper {
   /// Buidld context of the widget requesting query
   final BuildContext context;
 

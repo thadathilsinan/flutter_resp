@@ -2,4 +2,4 @@
 ///
 /// Allows the users adjust the values based on breakpoints
 /// to make the UI responsive
-class RespValue<T> {}
+final class RespValue<T> {}

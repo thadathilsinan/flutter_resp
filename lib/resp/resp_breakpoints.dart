@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_resp/resp/resp_breakpoints_override.dart';
+
 /// Defines the breakpoint to use in the flutter_resp framework
 ///
 /// The default breakpoints used in this framework are listed below:
@@ -9,7 +12,7 @@
 /// xxl (Double Extra large): 1200px and above
 ///
 /// We can define other breakpoints with a name and a breakpoint width value
-class RespBreakpoint {
+final class RespBreakpoint {
   final String name;
   final double value;
 
@@ -23,7 +26,7 @@ class RespBreakpoint {
 ///
 /// This class can be use to access the default breakpoints used in the
 /// flutter_resp
-class RespDefaultBreakPoints {
+final class RespDefaultBreakPoints {
   /// This is the list of the default breakpoints used
   static final _defaultBreakPoints = [
     const RespBreakpoint(name: 'xs', value: 0),
@@ -36,7 +39,7 @@ class RespDefaultBreakPoints {
 
   /// Get the sorted list of default breakpoints (Ascending order of the
   /// breakpoint value)
-  List<RespBreakpoint> get defaultBreakpoints {
+  List<RespBreakpoint> get _defaultBreakpoints {
     return RespDefaultBreakPoints._defaultBreakPoints
       ..sort(
         (a, b) => a.value.compareTo(b.value),
@@ -45,7 +48,7 @@ class RespDefaultBreakPoints {
 
   /// Get the sorted list of custom breakpoints along with the default
   /// breakpoints (Ascending order of the breakpoint value)
-  List<RespBreakpoint> customBreakpoints(
+  List<RespBreakpoint> _customBreakpoints(
       List<RespBreakpoint> customBreakpoints) {
     return [...RespDefaultBreakPoints._defaultBreakPoints, ...customBreakpoints]
       ..sort(
@@ -55,10 +58,35 @@ class RespDefaultBreakPoints {
 
   /// Get the sorted list of custom breakpoints without the default
   /// breakpoints (Ascending order of the breakpoint value)
-  List<RespBreakpoint> customBreakpointsWithoutDefaults(
+  List<RespBreakpoint> _customBreakpointsWithoutDefaults(
       List<RespBreakpoint> customBreakpoints) {
     return [...customBreakpoints]..sort(
         (a, b) => a.value.compareTo(b.value),
       );
+  }
+
+  /// Get the breakpoints after checking if the user has set any overrides to the breakpoints.
+  /// The output will contain the custom override set by the user
+  ///
+  /// The result breakpoints will be sorted based value of the breakpoint
+  ///
+  /// [context] The build context used to get the inherited widgets with the
+  /// breakpoint overrides
+  List<RespBreakpoint> getAllBreakpoints(BuildContext context) {
+    /// Check if overrides available
+    final override =
+        context.dependOnInheritedWidgetOfExactType<RespBreakpointsOverride>();
+
+    if (override != null) {
+      /// Get the override data and create the final breakpoints list and return it
+      if (override.clearDefaultBreakpoints) {
+        return _customBreakpoints(override.breakpoints);
+      } else {
+        return _customBreakpointsWithoutDefaults(override.breakpoints);
+      }
+    } else {
+      /// No overrides set, so return the default breakpoints
+      return _defaultBreakpoints;
+    }
   }
 }
