@@ -20,6 +20,14 @@ final class RespBreakpoint {
     required this.name,
     required this.value,
   });
+
+  @override
+  bool operator ==(Object other) {
+    return hashCode == other.hashCode;
+  }
+
+  @override
+  int get hashCode => value.hashCode;
 }
 
 /// Helper class used to access the breakpoint of the device
