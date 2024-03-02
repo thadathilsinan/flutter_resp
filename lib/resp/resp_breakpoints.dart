@@ -22,11 +22,8 @@ final class RespBreakpoint {
   });
 }
 
-/// The default breakpoint used  in the framework
-///
-/// This class can be use to access the default breakpoints used in the
-/// flutter_resp
-final class RespDefaultBreakPoints {
+/// Helper class used to access the breakpoint of the device
+final class RespBreakPointsHelper {
   /// This is the list of the default breakpoints used
   static final _defaultBreakPoints = [
     const RespBreakpoint(name: 'xs', value: 0),
@@ -39,8 +36,8 @@ final class RespDefaultBreakPoints {
 
   /// Get the sorted list of default breakpoints (Ascending order of the
   /// breakpoint value)
-  List<RespBreakpoint> get _defaultBreakpoints {
-    return RespDefaultBreakPoints._defaultBreakPoints
+  static List<RespBreakpoint> get _defaultBreakpoints {
+    return RespBreakPointsHelper._defaultBreakPoints
       ..sort(
         (a, b) => a.value.compareTo(b.value),
       );
@@ -48,9 +45,9 @@ final class RespDefaultBreakPoints {
 
   /// Get the sorted list of custom breakpoints along with the default
   /// breakpoints (Ascending order of the breakpoint value)
-  List<RespBreakpoint> _customBreakpoints(
+  static List<RespBreakpoint> _customBreakpoints(
       List<RespBreakpoint> customBreakpoints) {
-    return [...RespDefaultBreakPoints._defaultBreakPoints, ...customBreakpoints]
+    return [...RespBreakPointsHelper._defaultBreakPoints, ...customBreakpoints]
       ..sort(
         (a, b) => a.value.compareTo(b.value),
       );
@@ -58,7 +55,7 @@ final class RespDefaultBreakPoints {
 
   /// Get the sorted list of custom breakpoints without the default
   /// breakpoints (Ascending order of the breakpoint value)
-  List<RespBreakpoint> _customBreakpointsWithoutDefaults(
+  static List<RespBreakpoint> _customBreakpointsWithoutDefaults(
       List<RespBreakpoint> customBreakpoints) {
     return [...customBreakpoints]..sort(
         (a, b) => a.value.compareTo(b.value),
@@ -72,7 +69,7 @@ final class RespDefaultBreakPoints {
   ///
   /// [context] The build context used to get the inherited widgets with the
   /// breakpoint overrides
-  List<RespBreakpoint> getAllBreakpoints(BuildContext context) {
+  static List<RespBreakpoint> getAllBreakpoints(BuildContext context) {
     /// Check if overrides available
     final override =
         context.dependOnInheritedWidgetOfExactType<RespBreakpointsOverride>();
