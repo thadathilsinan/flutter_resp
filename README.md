@@ -1,39 +1,49 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Flutter Resp
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+Easy to use responsive frawork for flutter. This framework is inspired from the Tailwind CSS Responsive system.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+Here by default users will get some breakpoints **xs**(Extra small), **sm**(Small), **md**(Medium), **lg**(Large), **xl**(Extra large), **xxl**(Double extra large).
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+If the current screen size is greater than the given breakpoint, then the value specified for that particular breakpoint will be used in our app.
 
-## Features
+Lower breakpoint values will be overridden by the higher breakpoint values
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+To specify a value like Padding, Width, Height, Color, etc bases on the screen size, you need to wrap it with **RespValue** class and use the **value** getter of the object, based on the current screen size it will take a value from all of the specified values.
 
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+Example:
 
 ```dart
-const like = 'sample';
+import 'package:flutter_resp/flutter_resp.dart';
+
+Text(
+	RespValue(
+		xs: 'Extra small screen',
+		sm: 'Small Screen',
+		md: 'Medium screen',
+		lg: 'Large Screen',
+		xl: 'Extra Large Screen',
+		xxl: '2 Extra Large Screen',
+	).value
+)
 ```
 
-## Additional information
+We can also create custom breakpoints using the **RespBreakpointsOverride()** widget. Just wrap the parent widget with this widget and provide your Custom breakpoints. If needed we can clear all of the built in breakpoints and give new breakpoints.
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```dart
+import 'package:flutter_resp/flutter_resp.dart';
+
+Scaffold(
+	RespBreakpointsOverride(
+		clearDefaultBreakpoints: true,
+		breakpoints: [
+			RespBreakpoint(
+				name: 'customBreakpoint',
+				value: 300,	/// The width of the screen to activate this breakpoints
+			)
+		],
+		child: <CHILD WIDGET TREE> ,
+	)
+)
+```
+
+If you find any bugs or need to have any new feature please raise an issue in the Github issue tracker
