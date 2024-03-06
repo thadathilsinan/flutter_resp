@@ -25,6 +25,7 @@ final class RespValue<T> {
   /// breakpoints set by the user
   final BuildContext context;
 
+  /// Constructor for creating a responsive value
   const RespValue(
     this.context, {
     this.xs,
