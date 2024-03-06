@@ -26,6 +26,7 @@ final class RespBreakpointsOverride extends InheritedWidget {
       return false;
     }
 
-    return false;
+    return breakpoints != oldWidget.breakpoints ||
+        clearDefaultBreakpoints != oldWidget.clearDefaultBreakpoints;
   }
 }

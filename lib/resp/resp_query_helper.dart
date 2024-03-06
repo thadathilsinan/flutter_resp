@@ -28,7 +28,7 @@ final class RespQueryHelper {
 
     /// Check if the current width is greater than the breakpoint value
     /// in ascending order of the breakpoints to get the current breakpoint
-    for (final breakpoint in allBreakpoints) {
+    for (final breakpoint in allBreakpoints.reversed) {
       if (currentWidth > breakpoint.value) {
         return breakpoint;
       }

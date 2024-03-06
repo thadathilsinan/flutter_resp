@@ -85,9 +85,9 @@ final class RespBreakPointsHelper {
     if (override != null) {
       /// Get the override data and create the final breakpoints list and return it
       if (override.clearDefaultBreakpoints) {
-        return _customBreakpoints(override.breakpoints);
-      } else {
         return _customBreakpointsWithoutDefaults(override.breakpoints);
+      } else {
+        return _customBreakpoints(override.breakpoints);
       }
     } else {
       /// No overrides set, so return the default breakpoints
