@@ -8,7 +8,7 @@ import 'package:flutter_resp/resp/resp_query_helper.dart';
 /// to make the UI responsive
 final class RespValue<T> {
   /// The default breakpoints of the device
-  final T xs;
+  final T? xs;
   final T? sm;
   final T? md;
   final T? lg;
@@ -26,8 +26,8 @@ final class RespValue<T> {
   final BuildContext context;
 
   const RespValue(
-    this.context,
-    this.xs, {
+    this.context, {
+    this.xs,
     this.sm,
     this.md,
     this.lg,
@@ -77,6 +77,7 @@ final class RespValue<T> {
     }
 
     /// No value suitable for the current breakpoint found
-    throw Exception('Cannot find value for the current breakpoint.');
+    throw Exception(
+        'Cannot find value for the current breakpoint. Current Breakpoint (Name: ${currentBreakpoint.name}, Value: ${currentBreakpoint.value})');
   }
 }
