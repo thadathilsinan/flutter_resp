@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_resp/resp/resp_breakpoints.dart';
 import 'package:flutter_resp/resp/resp_query_helper.dart';
 
+typedef RespValueBuilder<T> = T Function(dynamic common);
+
 /// Create a value based on the current screen size
 ///
 /// Allows the users adjust the values based on breakpoints
@@ -36,6 +38,27 @@ final class RespValue<T> {
     this.xxl,
     this.others,
   });
+
+  /// A builder that allows users to use builder pattern to create a responsive value.
+  /// This will also allow the users to have a common value for all breakpoints that can
+  /// be accessed using the parameter 'common' of the builder.
+  RespValue.builder(
+    this.context, {
+    RespValueBuilder<T>? xs,
+    RespValueBuilder<T>? sm,
+    RespValueBuilder<T>? md,
+    RespValueBuilder<T>? lg,
+    RespValueBuilder<T>? xl,
+    RespValueBuilder<T>? xxl,
+    Map<String, RespValueBuilder<T>>? others,
+    dynamic common,
+  })  : xs = xs?.call(common),
+        sm = sm?.call(common),
+        md = md?.call(common),
+        lg = lg?.call(common),
+        xl = xl?.call(common),
+        xxl = xxl?.call(common),
+        others = others?.map((key, value) => MapEntry(key, value(common)));
 
   T get value {
     final currentBreakpoint =
